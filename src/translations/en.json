@@ -1,0 +1,16 @@
+{
+  "lang":"en",
+  "home": {
+    "home-title": "Home",
+    "memory-games": "Memory games",
+    "focus-games": "Focus games"
+  },
+  "settings": {
+    "settings-title": "settings",
+    "voices": "voices",
+    "language": "language"
+  },
+  "showGame": {
+    "play": "play"
+  }
+}

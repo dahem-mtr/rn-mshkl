@@ -1,0 +1,17 @@
+{
+  "lang":"ar",
+  "home": {
+    "home-title": "الرئيسية",
+    "memory-games": "العاب الذاكرة",
+    "focus-games": "العاب التركيز"
+    
+  },
+  "settings": {
+    "settings-title": "الإعدادات",
+    "voices": "أصوات",
+    "language": "اللغة"
+  },
+  "showGame": {
+    "play": "العب"
+  }
+}
