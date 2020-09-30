@@ -12,7 +12,6 @@ const index = () => {
   const [playCounter, setPlayCounter] = useState(0);
   const dispatch = useDispatch();
 
-
   const [headerData, setHeaderData] = useState({
     level: null,
     score: null,
@@ -38,8 +37,8 @@ const index = () => {
     }
   };
   const play = (level) => {
+    
     setPlayCounter((prevState) => prevState + 1);
-
     setGameProps(thisGameUtils.getGameProps(level));
   };
   const afterCountDownEnd = () => {
@@ -47,18 +46,15 @@ const index = () => {
   };
   useEffect(() => {
     getStoredDataObject("save").then((gamedata) => {
-      gamedata ?
-        null
-        :
-        setHeaderData({
-          ...headerData,
-          level: 2,
-          score: 50
-        });
+      gamedata
+        ? null
+        : setHeaderData({
+            ...headerData,
+            level: 2,
+            score: 50,
+          });
     });
   }, []);
-
-  
 
   return (
     <View style={{ flex: 1 }}>
@@ -67,7 +63,7 @@ const index = () => {
         sounds={sounds}
         afterCountDownEnd={afterCountDownEnd}
         headerProps={headerProps}
-        headerData={headerData}
+        // headerData={headerData}
         backgroundColor="#7366ff"
       >
         <Game gameProps={gameProps} sounds={sounds} next={next} />
@@ -77,4 +73,3 @@ const index = () => {
 };
 
 export default index;
-

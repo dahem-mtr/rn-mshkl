@@ -1,38 +1,25 @@
 import React, { useEffect, useState,useRef} from "react";
-import { StyleSheet, Easing, View, Animated} from "react-native";
+import { StyleSheet, View, Animated} from "react-native";
 import Headar from "../games-components/Headar";
 import CountDown from "../games-components/CountDown";
 import SoundsLoad from "../games-utils/SoundsLoad";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading } from "../../actions/appActions";
+import { actions} from "../../actions/appActions";
 
 const SingleGameContainer = (props) => {
-  const headerAnimRef = useRef(new Animated.Value(-80)).current;
   const dispatch = useDispatch();
 
   const [showCountDown, setShowCountDown] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
 
-  useEffect(() => {
-    if (showHeader ) {
-      Animated.timing(headerAnimRef, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-        easing: Easing.bounce,
-      }).start(() => {
-      });
-    }
-    else {
-        headerAnimRef.setValue(-80);
 
-    }
-  }, [showHeader]);
 
 
   useEffect(() => {
-    if (props.sounds && props.headerData.level) {
-      dispatch(setLoading(false));
+    if (props.sounds && props.headerProps.level) {
+      dispatch(actions.setLoading(false));
+      dispatch(actions.setShowMInTab(false));
+      
       setTimeout(() => {
         setShowCountDown(true)
         setTimeout(() => {
@@ -41,17 +28,17 @@ const SingleGameContainer = (props) => {
 
       }, 500);
     }
-  }, [props.sounds, props.headerData]);
+  }, [props.sounds, props.headerProps]);
 
   return (
     <View style={[styles.container, {backgroundColor: props.backgroundColor}]}>
       <SoundsLoad setSounds={props.setSounds} />
-      <Headar headerProps={props.headerProps} headerData={props.headerData} headerAnimRef={headerAnimRef}/>
+      <Headar showHeader={showHeader}headerProps={props.headerProps} headerData={props.headerData}/>
       {props.children}
       {
-        showCountDown ? (
+        showCountDown && 
           <CountDown sounds={props.sounds} afterCountDownEnd={props.afterCountDownEnd} />
-        ) : null}
+        }
     </View>
   );
 };

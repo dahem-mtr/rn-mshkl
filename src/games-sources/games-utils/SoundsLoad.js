@@ -13,10 +13,10 @@ const SoundsLoad = (props) => {
     async function correctSoundLoad() {
         const { sound } = await Audio.Sound.createAsync(
             require("../games-sound-effects/correct1.wav"),
-            {
-                shouldPlay: false,
-                isLooping: false,
-            }
+            // {
+            //     shouldPlay: false,
+            //     isLooping: false,
+            // }
         );
 
         setCurrectSound(sound);

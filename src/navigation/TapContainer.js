@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import {
   Ionicons,
   MaterialCommunityIcons as MaterialIcon,
 } from "@expo/vector-icons";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const TapContainer = (props) => {
   const [routeFocused, setRouteFocused] = useState("HomeScreeen");
@@ -13,30 +13,26 @@ const TapContainer = (props) => {
   const onPress = (tab) => {
     setRouteFocused(tab.routeName);
     if (tab.routeName == routeFocused) {
-      props.navigation.navigate(tab.routeName)
-
+      props.navigation.navigate(tab.routeName);
     } else {
-      props.navigation.navigate(tab.stackName)
-
+      props.navigation.navigate(tab.stackName);
     }
-      
   };
 
   const tabs = [
     {
       title: "home",
       routeName: "HomeScreeen",
-      stackName: "HomeTap"
+      stackName: "HomeTap",
     },
     {
       title: "settings",
       routeName: "SettingsScreen",
-      stackName: "SettingsTap"
-
+      stackName: "SettingsTap",
     },
   ];
   const getIcon = (routeName) => {
-    if (routeName == "HomeScreeen"){
+    if (routeName == "HomeScreeen") {
       return (
         <MaterialIcon
           name={"home"}
@@ -45,7 +41,7 @@ const TapContainer = (props) => {
         />
       );
     }
-    if (routeName == "SettingsScreen"){
+    if (routeName == "SettingsScreen") {
       return (
         <Ionicons
           name={"ios-list-box"}
@@ -54,27 +50,34 @@ const TapContainer = (props) => {
         />
       );
     }
-  }
-  
+  };
+
   const renderTabs = () => {
     return tabs.map((tab, i) => {
       return (
         <TouchableWithoutFeedback key={i} onPress={() => onPress(tab)}>
-          <View style={styles.tab}>
-            {getIcon(tab.routeName)}
-          </View>
+          <View style={styles.tab}>{getIcon(tab.routeName)}</View>
         </TouchableWithoutFeedback>
       );
     });
   };
-  return (
-    <View style={styles.container}>
-      {props.children}
-      <View style={[styles.tabsContent, { flexDirection: app.isRTL ? "row-reverse" : "row" }]}>
-        {renderTabs()}
+
+    return (
+      <View style={styles.container}>
+        {props.children}
+       { app.showMinTab?
+        <View
+          style={[
+            styles.tabsContent,
+            { flexDirection: app.isRTL ? "row-reverse" : "row" },
+          ]}
+        >
+          {renderTabs()}
+          </View>
+          : null
+        }
       </View>
-    </View>
-  );
+    );
 };
 
 export default TapContainer;
@@ -90,7 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   tab: {
-    // backgroundColor: "#ddd",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

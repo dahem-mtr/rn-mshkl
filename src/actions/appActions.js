@@ -1,4 +1,4 @@
-import { SET_LANG, SET_LOADING } from './types';
+import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB } from './types';
 
 export const setLang = (data) => {
     return {
@@ -13,5 +13,15 @@ export const setLoading = (data) => {
     };
 };
 
+export const setShowMInTab = (data) => {
+    return {
+        type: SET_SHOW_MIN_TAB,
+        payload: data,
+    };
+};
 
-
+export const actions = {
+    setLang,
+    setLoading,
+    setShowMInTab
+};
