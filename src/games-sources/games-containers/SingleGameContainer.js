@@ -2,6 +2,7 @@ import React, { useEffect, useState,useRef} from "react";
 import { StyleSheet, View, Animated} from "react-native";
 import Headar from "../games-components/Headar";
 import CountDown from "../games-components/CountDown";
+import ResultGame from "../games-components/ResultGame";
 import SoundsLoad from "../games-utils/SoundsLoad";
 import { useSelector, useDispatch } from "react-redux";
 import { actions} from "../../actions/appActions";
@@ -16,30 +17,30 @@ const SingleGameContainer = (props) => {
 
 
   useEffect(() => {
-    if (props.sounds && props.headerProps.level) {
-      dispatch(actions.setLoading(false));
-      dispatch(actions.setShowMInTab(false));
+    if (props.headerProps.level) {
+      dispatch(actions.setGameIsLoading(false));
       
       setTimeout(() => {
-        setShowCountDown(true)
+      setShowCountDown(true)
+
         setTimeout(() => {
           setShowHeader(true);
         }, 500);
 
-      }, 500);
+      }, 1000);
     }
-  }, [props.sounds, props.headerProps]);
+  }, [props.headerProps]);
 
   return (
     <View style={[styles.container, {backgroundColor: props.backgroundColor}]}>
-      <SoundsLoad setSounds={props.setSounds} />
-      <Headar showHeader={showHeader}headerProps={props.headerProps} headerData={props.headerData}/>
+      <Headar navigation={props.navigation} showHeader={showHeader}headerProps={props.headerProps} />
       {props.children}
       {
         showCountDown && 
-          <CountDown sounds={props.sounds} afterCountDownEnd={props.afterCountDownEnd} />
+          <CountDown  afterCountDownEnd={props.afterCountDownEnd} />
         }
-    </View>
+<ResultGame {...props}/>
+    </View> 
   );
 };
 

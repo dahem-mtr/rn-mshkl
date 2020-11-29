@@ -6,9 +6,9 @@ export class Game extends PureComponent {
     render(props) {
         return (
             <View style={{ alignItems: this.props.app.isRTL ? "flex-end" : "flex-start" }}>
-                <TouchableWithoutFeedback onPress={() => this.props.onPress(this.props.item.data)}>
+                <TouchableWithoutFeedback onPress={() => this.props.onPress(this.props.item)}>
                     <View key={this.props.index} style={styles.imageContent}>
-                        <Image style={styles.image} source={this.props.item.data.image} />
+                        <Image style={styles.image} source={this.props.item.image} />
                         <View></View>
                     </View>
                 </TouchableWithoutFeedback>

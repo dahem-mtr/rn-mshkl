@@ -4,6 +4,8 @@ import Square from "./components/Square";
 import SquaresContainer from "./containers/SquaresContainer";
 import ItemsRequired from "./components/ItemsRequired";
 import BarWait from "../../games-components/BarWait";
+import { useSelector, useDispatch } from "react-redux";
+import { gameActions } from "../../../actions/gameActions";
 
 import images from "./utils/images";
 import i18n from "../../i18n";
@@ -13,7 +15,10 @@ import { utils as thisGameUtils } from "./utils";
 
 import { anmations } from "./anmations";
 import { theme } from "../../../utils/theme";
-const index = ({ sounds, next, gameProps }) => {
+const index = ({ next }) => {
+  const gameState = useSelector((state) => state.game);
+  const dispatch = useDispatch();
+
   const [textTopSquares, setTextTopSquares] = useState(false);
   const [enablePress, setEnablePress] = useState(false);
   const [listenIfSquaresFinished, setListenIfSquaresFinished] = useState(false);
@@ -40,12 +45,14 @@ const index = ({ sounds, next, gameProps }) => {
         // Callback after anmations ends
 
         updateItems([]);
-          next(res);
+    dispatch(gameActions.setPlayResult(res));
+
       });
   };
 
   const showError = () => {
-    sounds.clickSound.replayAsync();
+    // sounds.clickSound.replayAsync();
+    utils.soundPlay("sound3.wav")
 
     updateItems((prevData) =>
       prevData.map((item) =>
@@ -54,7 +61,7 @@ const index = ({ sounds, next, gameProps }) => {
     );
 
     utils.wait(1000).then(() => {
-      Cleaning(false);
+      Cleaning("UNCORRECT");
     });
   };
 
@@ -69,13 +76,14 @@ const index = ({ sounds, next, gameProps }) => {
       callBack: (isCorrect) => {
         if (isCorrect) {
           setKeysCorrect([...keysCorrect, itemPressed.key]);
-          sounds.currectSound.replayAsync();
-          if (gameProps.numberRequired <= pressCounter + 1) {
+          // sounds.currectSound.replayAsync();
+          utils.soundPlay("correct1.wav")
+          if (gameState.playProps.numberRequired <= pressCounter + 1) {
             // go to Cleaning function
             setEnablePress(false);
   
             utils.wait(300).then(() => {
-              Cleaning(true);
+              Cleaning("CORRECT");
 
             });
 
@@ -86,7 +94,7 @@ const index = ({ sounds, next, gameProps }) => {
         }
 
         if (!isCorrect) {
-          sounds.wrongSound.replayAsync();
+          utils.soundPlay("error.wav")
           anmations.squaresVibration(squaresAnimRef, () => {
             // callBack
             utils.wait(300).then(() => {
@@ -118,18 +126,18 @@ const index = ({ sounds, next, gameProps }) => {
 
   
   useEffect(() => {
-    if (gameProps !== null) {
-      var countSquares = gameProps.countSquares,
+    if (gameState.playProps !== null) {
+      var countSquares = gameState.playProps.countSquares,
         kyes = utils.createKeys(countSquares),
         // array => [0,1,2,3,...to countSquares]
         mixedIndexes = utils.shuffleArray(kyes),
         //  shuffle array indexes  to =>  [3,1,0,2]
-        componentsInKeys = mixedIndexes.slice(0, gameProps.countImages),
+        componentsInKeys = mixedIndexes.slice(0, gameState.playProps.countImages),
         // get the first 3 indexes from array MixedIndexes =>  [3,1,0]
         mixedImages = utils.shuffleArray(images),
         // images => [image1,image2,image3,image4,...]
         // MixedImages => [image2,image4,image1,image3,...]
-        requiredKeys = componentsInKeys.slice(0, gameProps.numberRequired);
+        requiredKeys = componentsInKeys.slice(0, gameState.playProps.numberRequired);
       setItemsRequiredKeys(requiredKeys);
 
       setListenIfSquaresFinished(true);
@@ -141,7 +149,7 @@ const index = ({ sounds, next, gameProps }) => {
       });
       // setTextTopSquares("أحفظ اماكن الصور");
     }
-  }, [gameProps]);
+  }, [gameState.playProps]);
   const RenderSquares = () => {
     return items.map((item, i) => {
       return (

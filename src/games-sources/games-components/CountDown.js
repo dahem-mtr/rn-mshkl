@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { utils } from "../games-utils";
+
 const style = {content: {
     position: "absolute",
     alignSelf: "center",
@@ -10,11 +12,12 @@ const style = {content: {
         color: "#fff",
         fontWeight: "900",
     },}
-const CountDown = ({afterCountDownEnd,sounds}) => {
+const CountDown = ({afterCountDownEnd}) => {
     const [count, setcount] = useState(3);
     const start = () => {
         var i = 3;
-        sounds.clickSound.replayAsync();
+        utils.soundPlay("sound3.wav")
+
 
         let myInterval = setInterval(() => {
             if (i <= 1) {
@@ -24,7 +27,8 @@ const CountDown = ({afterCountDownEnd,sounds}) => {
             } else {
                 i = i - 1;
                 setcount(i);
-                sounds.clickSound.replayAsync();
+                    utils.soundPlay("sound3.wav")
+
 
             }
         }, 800);  

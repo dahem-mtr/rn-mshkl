@@ -1,11 +1,12 @@
-import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB } from "../actions/types";
+import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB, SET_GAME_IS_LOADING } from "../actions/types";
 
 const initialState = {
     isRTL: false,
     isDark: false,
     lang: "",
     isLoading: false,
-    showMinTab: true
+    showMinTab: true,
+    gameIsLoading: false
 }
 
 export default appReducer = (state = initialState, action) => {
@@ -30,6 +31,12 @@ export default appReducer = (state = initialState, action) => {
             return {
                 ...state,
                 showMinTab: action.payload,
+            };
+            case SET_GAME_IS_LOADING:
+
+            return {
+                ...state,
+                isLoading: action.payload,
             };
         
         

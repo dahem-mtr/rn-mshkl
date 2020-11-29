@@ -9,24 +9,30 @@ export const getGameProps = (level) => {
         numberRequired: 1,
       };
 
-    if (level >= 1 && level <= 2)
+    if (level > 1 && level <= 2)
       return {
         countSquares: 3,
         countImages: 3,
         numberRequired: 2,
       };
     
-    if (level >= 2 && level <= 3)
+    if (level > 2 && level <= 6)
       return {
         countSquares: 4,
         countImages: 4,
-        numberRequired: 3,
+        numberRequired: 2,
       };
     
+      if (level >= 6 && level <= 30)
+      return {
+        countSquares: 8,
+        countImages: 8,
+        numberRequired: 4,
+      };
     else 
       return {
-        countSquares: 1,
-        countImages: 1,
+        countSquares: 8,
+        countImages: 8,
         numberRequired: 1,
       };
     

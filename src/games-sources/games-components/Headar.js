@@ -37,7 +37,7 @@ const Headar = (props) => {
     if (props.showHeader) {
       Animated.timing(headerAnimRef, {
         toValue: 0,
-        duration: 1000,
+        duration: 700,
         useNativeDriver: true,
         // easing: Easing.bounce,
       }).start(() => {
@@ -81,6 +81,7 @@ const Headar = (props) => {
         <View style={styles.headerContent}>
           <View style={styles.headerProps}>
             <MaterialIcons
+            onPress={()=> props.navigation.goBack()}
               style={styles.icon}
               name="pause-circle-outline"
               size={30}

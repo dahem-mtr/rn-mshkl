@@ -10,12 +10,14 @@ import {
 import ParallaxScrollView from "react-native-parallax-scroll-view";
 import  { strings } from "../utils/i18n";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading } from "../actions/appActions";
+import { actions } from "../actions/appActions";
 import { theme } from "../utils/theme";
 import { games } from "../games-sources/games";
+import  SingleGame  from "../games-sources/games-controllers/SingleGame";
 import Footer from "../components/Footer";
 import GameData from "../components/GameData";
 import Users  from "../containers/Users";
+import { gameActions } from "../actions/gameActions";
 
 const showGame = ({ navigation, route }) => {
   const [showGame, setShowGame] = useState(false);
@@ -24,7 +26,10 @@ const showGame = ({ navigation, route }) => {
   const params = route.params;
 
   const onPress = () => {
-    dispatch(setLoading(true));
+    dispatch(actions.setGameIsLoading(true));
+    dispatch(actions.setShowMInTab(false));
+
+    dispatch(gameActions.setGame(params.item));
 
     setShowGame(true);
   };
@@ -45,14 +50,14 @@ const showGame = ({ navigation, route }) => {
           stickyHeaderHeight={70}
           renderStickyHeader={() => (
             <Text style={[styles.gameTitle, { paddingTop: 20 }]}>
-              {params.item.title[strings.t('lang')]}
+              {params.item.titles[strings.t('lang')]}
             </Text>
           )}
           fadeOutForeground={true}
           renderForeground={() => (
             <View style={{ paddingTop: 20 }}>
               <Image style={styles.image} source={params.item.image} />
-              <Text style={styles.gameTitle}>{params.item.title[strings.t('lang')]} </Text>
+              <Text style={styles.gameTitle}>{params.item.titles[strings.t('lang')]} </Text>
 
               <GameData theme={theme} height={100} />
             </View>
@@ -64,7 +69,7 @@ const showGame = ({ navigation, route }) => {
       </View>
     );
   } else {
-    return games[0].component;
+    return <SingleGame navigation={navigation}/>
   }
 };
 

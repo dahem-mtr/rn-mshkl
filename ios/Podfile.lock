@@ -355,6 +355,11 @@ PODS:
     - React
   - RNScreens (2.9.0):
     - React
+  - RNSound (0.11.0):
+    - React
+    - RNSound/Core (= 0.11.0)
+  - RNSound/Core (0.11.0):
+    - React
   - UMAppLoader (1.2.0)
   - UMBarCodeScannerInterface (5.2.1)
   - UMCameraInterface (5.2.1)
@@ -446,6 +451,7 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
@@ -573,6 +579,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   UMAppLoader:
     :path: "../node_modules/unimodules-app-loader/ios"
   UMBarCodeScannerInterface:
@@ -662,6 +670,7 @@ SPEC CHECKSUMS:
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
+  RNSound: c980916b596cc15c8dcd2f6ecd3b13c4881dbe20
   UMAppLoader: 98b77b58fac12abab963f79f762ceef008c50505
   UMBarCodeScannerInterface: e1299aafa3bede8ba674e84199e9f319a0195cad
   UMCameraInterface: 68da359d6fe7423d7b114b96ea0df268a84da39f
@@ -678,6 +687,6 @@ SPEC CHECKSUMS:
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: d0eda53e0b852697192ea4e472a818ef719835e5
+PODFILE CHECKSUM: 68511357ef01d3dca559c3a4b666046e1866bcb0
 
 COCOAPODS: 1.9.3
