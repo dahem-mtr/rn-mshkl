@@ -1,17 +1,19 @@
-import React, { useEffect, useState,useRef} from "react";
-import { StyleSheet, View, Animated} from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { StyleSheet, View, Animated } from "react-native";
 import Headar from "../games-components/Headar";
 import CountDown from "../games-components/CountDown";
 import ResultGame from "../games-components/ResultGame";
 import SoundsLoad from "../games-utils/SoundsLoad";
 import { useSelector, useDispatch } from "react-redux";
-import { actions} from "../../actions/appActions";
+import { actions } from "../../actions/appActions";
 
 const SingleGameContainer = (props) => {
+
   const dispatch = useDispatch();
 
   const [showCountDown, setShowCountDown] = useState(false);
   const [showHeader, setShowHeader] = useState(false);
+  const controllerProps = {...props, showHeader}
 
 
 
@@ -19,9 +21,9 @@ const SingleGameContainer = (props) => {
   useEffect(() => {
     if (props.headerProps.level) {
       dispatch(actions.setGameIsLoading(false));
-      
+
       setTimeout(() => {
-      setShowCountDown(true)
+        setShowCountDown(true)
 
         setTimeout(() => {
           setShowHeader(true);
@@ -32,15 +34,15 @@ const SingleGameContainer = (props) => {
   }, [props.headerProps]);
 
   return (
-    <View style={[styles.container, {backgroundColor: props.backgroundColor}]}>
-      <Headar navigation={props.navigation} showHeader={showHeader}headerProps={props.headerProps} />
+    <View style={[styles.container, { backgroundColor: props.backgroundColor }]}>
+      <Headar {...controllerProps} />
       {props.children}
       {
-        showCountDown && 
-          <CountDown  afterCountDownEnd={props.afterCountDownEnd} />
-        }
-<ResultGame {...props}/>
-    </View> 
+        showCountDown &&
+        <CountDown OnCountDownEnd={controllerProps.OnCountDownEnd} />
+      }
+      <ResultGame {...controllerProps} />
+    </View>
   );
 };
 

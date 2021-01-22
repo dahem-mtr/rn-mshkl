@@ -12,7 +12,7 @@ const style = {content: {
         color: "#fff",
         fontWeight: "900",
     },}
-const CountDown = ({afterCountDownEnd}) => {
+const CountDown = ({OnCountDownEnd}) => {
     const [count, setcount] = useState(3);
     const start = () => {
         var i = 3;
@@ -23,7 +23,7 @@ const CountDown = ({afterCountDownEnd}) => {
             if (i <= 1) {
                 clearInterval(myInterval);
                 setcount("");
-                    afterCountDownEnd()
+                    OnCountDownEnd()
             } else {
                 i = i - 1;
                 setcount(i);

@@ -13,24 +13,24 @@ const ResultGame = (props) => {
 
 
     useEffect(() => {
-        if (props.isEnd) {
+        if (props.gameIsEnd) {
             Animated.timing(animRef, {
                 toValue: -Dimensions.get("window").height,
-                duration: 1000,
+                duration: 600,
                 useNativeDriver: true,
 
             }).start(() => {
                 setTimeout(() => {
                 Animated.timing(starsAnimRef, {
                     toValue: 0,
-                    duration: 1000,
+                    duration: 800,
                     useNativeDriver: true,
     
                 }).start(() => {});
 
                 Animated.timing(starsScaleAnimRef, {
                     toValue: 1,
-                    duration: 1000,
+                    duration: 800,
                     useNativeDriver: true,
     
                 }).start(() => {
@@ -47,7 +47,7 @@ const ResultGame = (props) => {
             });
         }
 
-    }, [props.isEnd])
+    }, [props.gameIsEnd])
 
     const renderItems = () => {
 

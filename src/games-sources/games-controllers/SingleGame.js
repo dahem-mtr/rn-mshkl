@@ -4,15 +4,17 @@ import { gamesFile } from "../games/gamesFile";
 import SingleGameContainer from "../games-containers/SingleGameContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { utils as thisGameUtils } from "../games/firstGame/utils";
+import { utils  } from "../games-utils";
 import { storeData, getStoredDataObject } from "../../storage";
 import { gameActions } from "../../actions/gameActions";
 
-const index = ({navigation}) => {
+const SingleGame = ({navigation}) => {
   const gameState = useSelector((state) => state.game);
 
   const [playCounter, setPlayCounter] = useState(0);
   const [numberCorrect, setNumberCorrect] = useState(0);
-  const [isEnd, setIsEnd] = useState(false);
+  const [gameIsEnd, setGameIsEnd] = useState(false);
+  const maximumNumberToPlay = 1;
 
   const dispatch = useDispatch();
 
@@ -27,19 +29,17 @@ const index = ({navigation}) => {
 
 
   const play = (level) => {
-    //  console.warn(playCounter)
     
+
+    var playProps = utils.getPlayProps(gameState.gameProps.id,level);
+    dispatch(gameActions.setPlayProps(playProps));
     setPlayCounter((prevState) => prevState + 1);
 
-    var playProps = thisGameUtils.getGameProps(level);
-    dispatch(gameActions.setPlayProps(playProps));
-
   };
-  const afterCountDownEnd = () => {
+  const OnCountDownEnd = () => {
     play(headerProps.level);
   };
 
-  const maximumNumberToPlay = 1;
 
 
   
@@ -54,13 +54,13 @@ const index = ({navigation}) => {
           level: headerProps.level + 1,
           score: headerProps.score + headerProps.level * 50,
         });
-        playCounter < maximumNumberToPlay ? play(headerProps.level + 1) : setIsEnd(true);
+        playCounter < maximumNumberToPlay ? play(headerProps.level + 1) : setGameIsEnd(true);
       } else {
         setHeaderProps({
           level: headerProps.level == 1 ? 1 : headerProps.level - 1,
           score: headerProps.score == 0 ? 0 : headerProps.score - 50,
         });
-        playCounter < maximumNumberToPlay ? play(headerProps.level - 1) : setIsEnd(true);
+        playCounter < maximumNumberToPlay ? play(headerProps.level - 1) : setGameIsEnd(true);
       }
 
     }
@@ -81,7 +81,7 @@ const index = ({navigation}) => {
   const renderGame = () => {
 
     return gamesFile.map((gameFile, i) => {
-      if (gameFile.gameId == gameState.props.id) {
+      if (gameFile.gameId == gameState.gameProps.id) {
         return <View style={{ flex: 1 }} key={i} >
           {gameFile.component}
         </View>
@@ -90,19 +90,19 @@ const index = ({navigation}) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    // <View style={{ flex: 1 }}>
       <SingleGameContainer
-        afterCountDownEnd={afterCountDownEnd}
+        OnCountDownEnd={OnCountDownEnd}
         headerProps={headerProps}
-        isEnd={isEnd}
+        gameIsEnd={gameIsEnd}
         numberCorrect={numberCorrect}
         navigation={navigation}
-        backgroundColor={gameState.props.backgroundColor}
+        backgroundColor={gameState.gameProps.backgroundColor}
       >
         {renderGame()}
       </SingleGameContainer>
-    </View>
+    // </View>
   );
 };
 
-export default index;
+export default SingleGame;

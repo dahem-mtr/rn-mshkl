@@ -127,18 +127,17 @@ const index = ({ next }) => {
   
   useEffect(() => {
     if (gameState.playProps !== null) {
-      var playProps = thisGameUtils.getGameProps(3);
-      var countSquares = playProps.countSquares,
+      var countSquares = gameState.playProps.countSquares,
         kyes = utils.createKeys(countSquares),
         // array => [0,1,2,3,...to countSquares]
         mixedIndexes = utils.shuffleArray(kyes),
         //  shuffle array indexes  to =>  [3,1,0,2]
-        componentsInKeys = mixedIndexes.slice(0,  playProps.countImages),
+        componentsInKeys = mixedIndexes.slice(0, gameState.playProps.countImages),
         // get the first 3 indexes from array MixedIndexes =>  [3,1,0]
         mixedImages = utils.shuffleArray(images),
         // images => [image1,image2,image3,image4,...]
         // MixedImages => [image2,image4,image1,image3,...]
-        requiredKeys = componentsInKeys.slice(0,  playProps.numberRequired);
+        requiredKeys = componentsInKeys.slice(0, gameState.playProps.numberRequired);
       setItemsRequiredKeys(requiredKeys);
 
       setListenIfSquaresFinished(true);
