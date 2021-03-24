@@ -22,7 +22,7 @@ export const setPlayResult = (data) => {
     };
 };
 
-export const gameActions = {
+export const controllerActions = {
     setGame,
     setPlayProps,
     setPlayResult

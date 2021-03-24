@@ -5,7 +5,7 @@ import SquaresContainer from "./containers/SquaresContainer";
 import ItemsRequired from "./components/ItemsRequired";
 import BarWait from "../../games-components/BarWait";
 import { useSelector, useDispatch } from "react-redux";
-import { gameActions } from "../../../actions/gameActions";
+import { controllerActions } from "../../../actions/controllerActions";
 
 import images from "./utils/images";
 import i18n from "../../i18n";
@@ -45,7 +45,7 @@ const index = ({ next }) => {
         // Callback after anmations ends
 
         updateItems([]);
-    dispatch(gameActions.setPlayResult(res));
+    dispatch(controllerActions.setPlayResult(res));
 
       });
   };

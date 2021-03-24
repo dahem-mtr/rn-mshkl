@@ -14,12 +14,13 @@ function MainStackScreen() {
         <MainStack.Navigator
             screenOptions={{ gestureEnabled: false }}
         >
-            <MainStack.Screen options={{ headerShown: false }} name="AppLoading" component={screens.AppLoading} />
+            {/* <MainStack.Screen options={{ headerShown: false }} name="AppLoading" component={screens.AppLoading} /> */}
+            <MainStack.Screen options={{ headerShown: false }} name="MainTabNavigator" component={MainTabNavigator} />
+            
             <RootStack.Screen options={{
                 headerShown: false, ...TransitionPresets.ModalSlideFromBottomIOS,
                 }} name="LanguagesScreen" component={screens.LanguagesScreen} />
 
-            <MainStack.Screen options={{ headerShown: false }} name="MainTabNavigator" component={MainTabNavigator} />
 
         </MainStack.Navigator>
     );

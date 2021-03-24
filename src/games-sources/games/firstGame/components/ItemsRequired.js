@@ -65,15 +65,12 @@ export default React.memo(ItemsRequired);
 
 const styles = StyleSheet.create({
   showImageRContent: {
-    marginTop: 30,
+    // marginTop: 30,
     height: 110,
-    paddingTop: 6,
     flexDirection: "row-reverse",
     // backgroundColor: "#00000040",
-    // alignSelf: "flex-end",
     borderRadius: 4,
-    //  justifyContent: "center",
-    // alignSelf: "center",
+    
   },
   animatedView: {
     // justifyContent: 'center',

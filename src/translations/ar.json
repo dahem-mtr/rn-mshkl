@@ -1,13 +1,14 @@
 {
   "lang":"ar",
   "home": {
-    "home-title": "الرئيسية",
-    "memory-games": "العاب الذاكرة",
-    "focus-games": "العاب التركيز"
+    "screen-title": "الرئيسية",
+    "memory-games": "الذاكرة",
+    "focus-games": "التركيز"
     
   },
   "settings": {
-    "settings-title": "الإعدادات",
+    "screen-title": "الإعدادات",
+    "more": "المزيد",
     "voices": "أصوات",
     "language": "اللغة"
   },

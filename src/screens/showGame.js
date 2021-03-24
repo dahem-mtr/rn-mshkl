@@ -1,44 +1,50 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-  Image,
-  Dimensions,
-} from "react-native";
-import ParallaxScrollView from "react-native-parallax-scroll-view";
-import  { strings } from "../utils/i18n";
+import { View } from "react-native";
+import { strings } from "../utils/i18n";
 import { useSelector, useDispatch } from "react-redux";
 import { actions } from "../actions/appActions";
 import { theme } from "../utils/theme";
-import { games } from "../games-sources/games";
-import  SingleGame  from "../games-sources/games-controllers/SingleGame";
-import Footer from "../components/Footer";
+import SingleGameController from "../games-sources/games-controllers/SingleGameController";
 import GameData from "../components/GameData";
-import Users  from "../containers/Users";
-import { gameActions } from "../actions/gameActions";
-
+import Users from "../containers/Users";
+import ParallaxScrollView1 from "../containers/ParallaxScrollView";
+import { controllerActions } from "../actions/controllerActions";
 const showGame = ({ navigation, route }) => {
-  const [showGame, setShowGame] = useState(false);
   const dispatch = useDispatch();
 
   const params = route.params;
-
+  const app = useSelector((state) => state.app);
   const onPress = () => {
-    dispatch(actions.setGameIsLoading(true));
-    dispatch(actions.setShowMInTab(false));
+    dispatch(actions.setScreenIsFadeing(true));
 
-    dispatch(gameActions.setGame(params.item));
-
-    setShowGame(true);
+    dispatch(controllerActions.setGame(params.item));
   };
 
-  if (!showGame) {
+  if (app.showGame) return <SingleGameController navigation={navigation} />;
+  
     return (
-      <View style={styles.container}>
-        <ParallaxScrollView
-          
+      <View style={{ flex: 1 }}>
+        <ParallaxScrollView1
+          item={params.item}
+          gameTitleColor={"#fff"}
+          app={app}
+          navigation={navigation}
+          strings={strings}
+          onPress={onPress}
+          // gameData={<GameData theme={theme} height={100} />}
+        >
+           <GameData theme={theme} height={100}/>
+
+          <Users theme={theme} />
+        </ParallaxScrollView1>
+      </View>
+    );
+};
+
+export default showGame;
+
+{
+  /* <ParallaxScrollView
           backgroundColor={params.item.backgroundColor}
           contentContainerStyle={{
             borderTopEndRadius: 20,
@@ -50,54 +56,25 @@ const showGame = ({ navigation, route }) => {
           stickyHeaderHeight={70}
           renderStickyHeader={() => (
             <Text style={[styles.gameTitle, { paddingTop: 20 }]}>
-              {params.item.titles[strings.t('lang')]}
+              {params.item.titles[strings.t("lang")]}
             </Text>
           )}
           fadeOutForeground={true}
           renderForeground={() => (
             <View style={{ paddingTop: 20 }}>
-              <Image style={styles.image} source={params.item.image} />
-              <Text style={styles.gameTitle}>{params.item.titles[strings.t('lang')]} </Text>
+              <TouchableWithoutFeedback onPress={onPress}>
+                <View>
+                  <Image style={styles.image} source={params.item.image} />
+                  <Text style={styles.gameTitle}>
+                    {params.item.titles[strings.t("lang")]}{" "}
+                  </Text>
 
-              <GameData theme={theme} height={100} />
+                  <GameData theme={theme} height={100} />
+                </View>
+              </TouchableWithoutFeedback>
             </View>
           )}
         >
-          <Users theme={theme}/>
-        </ParallaxScrollView>
-        <Footer onPress={onPress}navigation={navigation}/>
-      </View>
-    );
-  } else {
-    return <SingleGame navigation={navigation}/>
-  }
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  row: {
-    flexDirection: "row-reverse",
-  },
-  
-  image: {
-    // marginTop:60,
-    width: Dimensions.get("window").width,
-    height: 230,
-    // borderRadius: 8,
-    // resizeMode: 'stretch', // or 'stretch'
-  },
-  gameTitle: {
-    alignSelf: "center",
-    fontSize: 16,
-    marginHorizontal: 10,
-    color: "#fff",
-
-    fontFamily: theme.fonts.main.ar,
-  },
-  
-});
-
-export default showGame;
+          <Users theme={theme} />
+        </ParallaxScrollView> */
+}

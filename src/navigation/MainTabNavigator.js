@@ -5,19 +5,19 @@ import {
   TransitionPresets,
 } from "@react-navigation/stack";
 import * as screens from "../screens";
-import { TabNavigator, Header, theme } from "../utils/theme";
 import TapContainer from "./TapContainer";
 import { useSelector } from "react-redux";
+import { strings } from "../utils/i18n";
 
 const TransitionPropsRTL = {
-  ...TransitionPresets.ModalSlideFromBottomIOS,
-  // gestureDirection: "horizontal-inverted",
+  ...TransitionPresets.SlideFromRightIOS,
+  gestureDirection: "horizontal-inverted",
 };
 const TransitionProps = {
   ...TransitionPresets.SlideFromRightIOS,
 };
 const ScreenOptions = {
-  headerShown: false,
+  headerShown: true,
 };
 
 const HomeStack = createStackNavigator();
@@ -28,15 +28,17 @@ function HomeStackScreen() {
     <HomeStack.Navigator
       screenOptions={{ gestureEnabled: false }}
     >
-      <SettingsStack.Screen
+      <HomeStack.Screen
         name="HomeScreeen"
-        options={{ headerShown: false }}
+        options={
+          { ...TransitionPropsRTL,title: strings.t("home.screen-title"),...ScreenOptions
+           }}
         component={screens.HomeScreen}
       />
-      <SettingsStack.Screen
+      <HomeStack.Screen
         name="showGameScreeen"
         options={
-          { ...TransitionPresets.ModalSlideFromBottomIOS, ...ScreenOptions }
+          { ...TransitionPropsRTL,headerShown: false }
         }
         component={screens.showGame}
       />
@@ -50,8 +52,15 @@ function SettingsStackScreen() {
     <SettingsStack.Navigator>
       <SettingsStack.Screen
         name="SettingsScreen"
-        options={{ headerShown: false, title: "ss" }}
+        options={{ ...TransitionPropsRTL, title: strings.t("settings.screen-title"),...ScreenOptions}}
         component={screens.settingsScreen}
+      />
+      <SettingsStack.Screen
+        name="test"
+        options={
+          { ...TransitionPropsRTL,...ScreenOptions }
+        }
+        component={screens.LanguagesScreen}
       />
     </SettingsStack.Navigator>
   );

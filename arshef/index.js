@@ -6,7 +6,7 @@ import SingleGameContainer from "../../games-containers/SingleGameContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { utils as thisGameUtils } from "./utils";
 import { storeData, getStoredDataObject } from "../../../storage";
-import { gameActions } from "../../../actions/gameActions";
+import { controllerActions } from "../../../actions/controllerActions";
 import { render } from "react-dom";
 
 const index = () => {
@@ -30,7 +30,7 @@ const index = () => {
     setPlayCounter((prevState) => prevState + 1);
     
     var playProps = thisGameUtils.getGameProps(level);
-    dispatch(gameActions.setPlayProps(playProps));
+    dispatch(controllerActions.setPlayProps(playProps));
     
   };
   const afterCountDownEnd = () => {

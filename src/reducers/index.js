@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 
 import appReducer from './appReducer';
-import gameReducer from './gameReducer';
+import controllerReducer from './controllerReducer';
 
 
 export default combineReducers(
     {
         app: appReducer,
-        game: gameReducer,
+        controller: controllerReducer,
 
     }
 );

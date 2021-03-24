@@ -4,12 +4,22 @@ import { theme } from '../utils/theme'
 
 const GameData = (height) => {
     return (
-        <View style={[styles.container, height]}>
-            <Text style={styles.text}>نقاطك</Text>
+        <View style={[styles.container]}>
+            {/* <Text style={styles.title}> مستواك</Text> */}
             <View style={styles.row}>
-                <Text style={styles.text}> - </Text>
-                <Text style={styles.text}> - </Text>
-                <Text style={styles.text}> - </Text>
+                
+                <View>
+                <Text style={styles.text}>نمط التدريب</Text>
+                </View>
+                <View>
+                </View>
+                <View>
+                <Text style={styles.text}>المستوى الحالي - 2</Text>
+                </View>
+                <View>
+                <Text style={styles.text}>أعلى مستوى   - ٢٠٢</Text>
+                </View>
+                
 
             </View>
         </View>
@@ -20,18 +30,26 @@ export default GameData
 
 const styles = StyleSheet.create({
     container: {
-        alignItems:'center',
         backgroundColor: "#fff",
         alignSelf: "center",
         width: "90%",
         borderRadius: 7,
-        marginTop:5
+        marginTop:5,
+    },title:{
+        marginTop:10,
+        marginLeft:2,
+        alignSelf:"center",
+        fontFamily: theme.fonts.main.ar
+        
     }, text: {
         marginTop:10,
+        marginLeft:2,
+        alignSelf:"center",
         fontFamily: theme.fonts.main.ar
     },
     row: {
-        flexDirection: 'row-reverse',
-        justifyContent:'space-between'
+        // flexDirection: 'row-reverse',
+        // justifyContent:"space-around",
+        // flexWrap:"wrap"
     }
 })

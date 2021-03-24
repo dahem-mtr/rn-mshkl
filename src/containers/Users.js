@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         fontSize: 16,
         marginHorizontal: 10,
-        color: "#55a630",
+        // color: "#55a630",
 
         fontFamily: theme.fonts.main.ar,
     },

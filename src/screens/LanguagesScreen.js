@@ -5,7 +5,7 @@ const Languages = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 30 }}>This is a Languages!</Text>
-            <TouchableOpacity style={styles.button} activeOpacity={1} onPress={() => navigation.navigate("showGame")}><Text style={{ fontSize: 30, color: "#fff", textAlign: 'center' }}> back </Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button} activeOpacity={1} onPress={() => navigation.goBack()}><Text style={{ fontSize: 30, color: "#fff", textAlign: 'center' }}> back </Text></TouchableOpacity>
         </View>
     )
 }

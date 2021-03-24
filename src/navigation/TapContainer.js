@@ -5,7 +5,7 @@ import {
   MaterialCommunityIcons as MaterialIcon,
 } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-
+// 00b8fc
 const TapContainer = (props) => {
   const [routeFocused, setRouteFocused] = useState("HomeScreeen");
   const app = useSelector((state) => state.app);

@@ -1,4 +1,4 @@
-import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB, SET_GAME_IS_LOADING } from './types';
+import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB, SET_SCREEN_IS_FADEING,SET_SHOW_GAME } from './types';
 
 export const setLang = (data) => {
     return {
@@ -20,9 +20,15 @@ export const setShowMInTab = (data) => {
     };
 };
 
-export const setGameIsLoading = (data) => {
+export const setScreenIsFadeing = (data) => {
     return {
-        type: SET_GAME_IS_LOADING,
+        type: SET_SCREEN_IS_FADEING,
+        payload: data,
+    };
+};
+export const setShowGame = (data) => {
+    return {
+        type: SET_SHOW_GAME,
         payload: data,
     };
 };
@@ -31,5 +37,6 @@ export const actions = {
     setLang,
     setLoading,
     setShowMInTab,
-    setGameIsLoading
+    setScreenIsFadeing,
+    setShowGame
 };

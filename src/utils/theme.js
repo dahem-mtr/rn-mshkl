@@ -1,9 +1,12 @@
 
 const minColor = '#5fdde5'
 const minColdor = '#9acd32'
+const backgroundColor = '#f4f3f7'
 export const theme = {
     colors: {
-    backgroundColor: "#fff",
+    backgroundColor: backgroundColor,
+    backgroundColorSecondary: "#ddd",
+    // backgroundColor: "#EFEFF4",
     // backgroundColor: "#f6f7f7",
     // backgroundColor: "#f3fafc",
       main: minColor,

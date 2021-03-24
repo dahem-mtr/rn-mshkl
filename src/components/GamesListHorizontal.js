@@ -2,18 +2,11 @@ import React, { useRef, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { theme } from "../utils/theme";
 import Game from "../components/Game";
-const GamesListHorizontal = ({
-  navigation,
-  app,
-  games,
-  title,
-  backgroundColor,
-  type
-}) => {
+const GamesListHorizontal = ({ navigation, app, games, title, type }) => {
   const scrollRef = useRef();
 
   const onPress = (item) => {
-    navigation.navigate("showGameScreeen", {item });
+    navigation.navigate("showGameScreeen", { item });
   };
   const scrollTo = () => {
     if (app.isRTL)
@@ -25,52 +18,55 @@ const GamesListHorizontal = ({
   }, [app.isRTL]);
 
   return (
-    <View
-      style={[
-        styles.content,
-        {
-          backgroundColor: backgroundColor,
-          shadowColor: backgroundColor,
-        },
-        app.isRTL
-          ? {
-            alignItems:"flex-end",
-            borderTopEndRadius: app.isRTL ? 10 : 0,
-            borderBottomEndRadius: app.isRTL ? 10 : 0,
-            }
-          : {
-            alignItems: "flex-start",
-            borderTopStartRadius: app.isRTL ? 0 : 10,
-            borderBottomStartRadius: app.isRTL ? 0 : 10,
-              
-            },
-      ]}
-    >
-      <Text style={styles.title}>{title}</Text>
-      <FlatList
-        ref={scrollRef}
-        onLayout={() => scrollTo()}
-        decelerationRate={0}
-        snapToInterval={200} //your element width
-        snapToAlignment={"center"}
-        initialNumToRender={200}
-
-
-        data={games}
-        
-        renderItem={({ item, index }) => (
-          item.type == type ? 
-            <Game item={item} onPress={onPress} app={app} index={index} />
-            : null
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          flexDirection: app.isRTL ? "row-reverse" : "row",
-          padding: 10,
-        }}
-      />
+    <View>
+      
+      <View
+        style={[
+          styles.content,
+          app.isRTL
+            ? {
+                alignItems: "flex-end",
+                borderTopEndRadius: 10,
+                borderBottomEndRadius: 10,
+                marginEnd:5
+              }
+            : {
+                alignItems: "flex-start",
+                borderTopStartRadius: 10,
+                borderBottomStartRadius:  10,
+                marginStart:5
+              },
+        ]}
+      >
+        <View style={styles.titleContent}>
+        <Text
+          style={[
+            styles.title,{ alignSelf: app.isRTL ? "flex-end" : "flex-start" }]} >
+          {title}
+        </Text>
+      </View>
+        <FlatList
+          ref={scrollRef}
+          onLayout={() => scrollTo()}
+          decelerationRate={0}
+          snapToInterval={200} //your element width
+          snapToAlignment={"center"}
+          initialNumToRender={200}
+          data={games}
+          renderItem={({ item, index }) =>
+            item.type == type ? (
+              <Game item={item} onPress={onPress} app={app} index={index} />
+            ) : null
+          }
+          keyExtractor={(item, index) => index.toString()}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            flexDirection: app.isRTL ? "row-reverse" : "row",
+            padding: 10,
+          }}
+        />
+      </View>
     </View>
   );
 };
@@ -81,22 +77,24 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: "center",
     marginVertical: 10,
-    // backgroundColor: "#aed8a7",
-    // #6fc3e2
-
-    paddingVertical: 10,
-    shadowOpacity: 1,
+    backgroundColor: "#fff",
+    shadowColor: "silver",
+     shadowOpacity: 0.1,
     shadowOffset: {
-      height: 1,
+      height: 2,
       width: 1,
     },
+
+    paddingVertical: 10,
+  },
+  titleContent: {
+    // backgroundColor: "#e5e5e5",
   },
   title: {
     fontFamily: theme.fonts.main.ar,
-    color: "#fff",
+    paddingVertical: 10,
     fontSize: 16,
-
+    // color: "#545F62",
     marginHorizontal: 10,
-    // marginBottom: 10,
   },
 });

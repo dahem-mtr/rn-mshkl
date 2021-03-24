@@ -1,38 +1,21 @@
-import React, { useRef, useEffect} from "react";
-import { StyleSheet, Text, View, Animated, Easing} from "react-native";
+import React, { useRef, useEffect, useState } from "react";
+import { StyleSheet, Text, View, Animated, Easing } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Header } from "react-native/Libraries/NewAppScreen";
+var STATUS_BAR_HEIGHT = getStatusBarHeight();
+
 const Headar = (props) => {
-  const data = [
-    {
-      key: 1,
-      state: true,
-    },
-    {
-      key: 2,
-      state: true,
-    },
-    {
-      key: 3,
-      state: false,
-    },
-    {
-      key: 3,
-      state: false,
-    },
-    {
-      key: 3,
-      state: false,
-    },
-    {
-      key: 3,
-      state: false,
-    },
-  ];
+  const headerAnimRef = useRef(new Animated.Value(-112)).current;
+  
 
+  const check = (answer) => {
+    if (answer === true) return "#55a630";
+    else if (answer === null) return "silver";
+    else return "red";
+  };
 
-  const headerAnimRef = useRef(new Animated.Value(-80)).current;
-
+  
   useEffect(() => {
     if (props.showHeader) {
       Animated.timing(headerAnimRef, {
@@ -40,35 +23,21 @@ const Headar = (props) => {
         duration: 700,
         useNativeDriver: true,
         // easing: Easing.bounce,
-      }).start(() => {
-      });
-    }
-    else {
-      headerAnimRef.setValue(-90);
-
+      }).start(() => {});
     }
   }, [props.showHeader]);
   const renderItems = () => {
-    return data.map((item, i) => {
+    return props.answers.map((item, i) => {
       return (
         <View
-          style={{
-            height: 12,
-            width: 33,
-            backgroundColor: item.state ? "#55a630" : "silver",
-            marginHorizontal: 4,
-            marginTop: 4,
-          }}
+          style={[styles.answer,{backgroundColor: check(item)}]}
           key={i}
-        >
-          {/* <Text style={styles.title}>{item.key}</Text> */}
-        </View>
+        ></View>
       );
     });
   };
 
   return (
-    <View style={styles.container}>
       <Animated.View
         style={{
           transform: [
@@ -76,30 +45,39 @@ const Headar = (props) => {
               translateY: headerAnimRef,
             },
           ],
+          height: props.headerHeight,
         }}
       >
-        <View style={styles.headerContent}>
+        <View style={styles.headerContent}
+        onLayout={(event) => {
+          props.setHeaderHeight(event.nativeEvent.layout.height);
+        }}
+        >
           <View style={styles.headerProps}>
             <MaterialIcons
-            onPress={()=> props.navigation.goBack()}
+              onPress={() => props.navigation.goBack()}
               style={styles.icon}
               name="pause-circle-outline"
               size={30}
               color="black"
             />
-            <View>
+
+            <View style={styles.item}>
               <Text style={styles.title}>المستوى</Text>
               <Text style={styles.number}>{props.headerProps.level}</Text>
             </View>
-            <View>
+            <View style={styles.item}>
               <Text style={styles.title}>النقاط</Text>
               <Text style={styles.number}>{props.headerProps.score}</Text>
             </View>
+            {/* <View style={styles.item}>
+              <Text style={styles.title}>الوقت</Text>
+             {props.timerComponent}
+            </View> */}
           </View>
-          <View style={styles.data}>{renderItems()}</View>
+          <View style={styles.answersContent}>{renderItems()}</View>
         </View>
       </Animated.View>
-    </View>
   );
 };
 
@@ -107,22 +85,22 @@ export default Headar;
 
 const styles = StyleSheet.create({
   container: {
-    height: 90,
+   
   },
   headerContent: {
-    height: 90,
-    paddingTop: getStatusBarHeight() + 10,
-
+    paddingTop: STATUS_BAR_HEIGHT,
+    paddingBottom: 5,
     position: "absolute",
     top: 0,
     width: "100%",
     backgroundColor: "#fff",
-    borderBottomEndRadius: 10,
-    borderBottomStartRadius: 10,
+    // borderBottomEndRadius: 10,
+    // borderBottomStartRadius: 10,
   },
   headerProps: {
     flexDirection: "row-reverse",
-    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    justifyContent: "space-between",
   },
   title: {
     alignSelf: "center",
@@ -135,10 +113,22 @@ const styles = StyleSheet.create({
     // color: "#7366ff"
   },
   icon: {
-    // alignSelf:"center"
-  },
-  data: {
-    flexDirection: "row-reverse",
     alignSelf: "center",
   },
+  answersContent: {
+    flexDirection: "row-reverse",
+    marginVertical: 6,
+    marginStart:20
+  },
+  item: {
+    // backgroundColor: "silver",
+    width: 70,
+  },
+  answer :{
+    height: 12,
+    width: 12,
+    marginHorizontal: 4,
+    // marginTop: 4,
+    borderRadius: 2,
+  }
 });

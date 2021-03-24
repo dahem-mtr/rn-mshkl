@@ -1,4 +1,4 @@
-import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB, SET_GAME_IS_LOADING } from "../actions/types";
+import { SET_LANG, SET_LOADING, SET_SHOW_MIN_TAB, SET_SCREEN_IS_FADEING,SET_SHOW_GAME} from "../actions/types";
 
 const initialState = {
     isRTL: false,
@@ -6,12 +6,14 @@ const initialState = {
     lang: "",
     isLoading: false,
     showMinTab: true,
-    gameIsLoading: false
+    screenIsFadeing: false,
+    ShowGame: false
 }
 
 export default appReducer = (state = initialState, action) => {
 
     switch (action.type) {
+        
         case SET_LANG:
 
             return {
@@ -32,12 +34,21 @@ export default appReducer = (state = initialState, action) => {
                 ...state,
                 showMinTab: action.payload,
             };
-            case SET_GAME_IS_LOADING:
+
+            case SET_SCREEN_IS_FADEING:
 
             return {
                 ...state,
-                isLoading: action.payload,
+                screenIsFadeing: action.payload,
             };
+
+            case SET_SHOW_GAME:
+
+            return {
+                ...state,
+                showGame: action.payload,
+            };
+        
         
         
         default:

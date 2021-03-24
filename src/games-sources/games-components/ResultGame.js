@@ -2,6 +2,9 @@ import React, { useEffect, useState,useRef } from 'react'
 import { StyleSheet, Text, View, Dimensions, Animated } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../actions/appActions";
+
 const ResultGame = (props) => {
 
     const [show, setShow] = useState(false);
@@ -10,6 +13,7 @@ const ResultGame = (props) => {
     const starsAnimRef = useRef(new Animated.Value(200)).current;
     const starsScaleAnimRef = useRef(new Animated.Value(1.4)).current;
     const stars = 2;
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -114,7 +118,7 @@ const ResultGame = (props) => {
                 
 
             </View> 
-                <TouchableWithoutFeedback onPress={() => props.navigation.goBack()}>
+                <TouchableWithoutFeedback onPress={() => {  dispatch(actions.setShowMInTab(true)); dispatch(actions.setShowGame(false)); }}>
                 <Text style={styles.back}>
                     back
           </Text>

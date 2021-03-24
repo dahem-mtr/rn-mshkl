@@ -5,7 +5,7 @@ import { storeData, getStoredData } from "../storage";
 import {  useDispatch } from "react-redux";
 import { setLang, setLoading } from "../actions/appActions";
 import i18n from "../../i18n";
-const appLoading = ({ navigation }) => {
+const appLoading = ( props ) => {
   const dispatch = useDispatch();
 
   const [langLoaded, setLangLoaded] = useState(false);
@@ -30,19 +30,15 @@ const appLoading = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    if (fontsLoaded && langLoaded) navigation.navigate("MainTabNavigator");
+    if (fontsLoaded && langLoaded);
+   setTimeout(() => {
+    props.setAppLoaded(true)
+   }, 1000);
   }, [fontsLoaded, langLoaded]);
 
-  return <View style={styles.container}></View>;
+  return null
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+
 
 export default appLoading;

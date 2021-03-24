@@ -1,12 +1,13 @@
 {
   "lang":"en",
   "home": {
-    "home-title": "Home",
-    "memory-games": "Memory games",
-    "focus-games": "Focus games"
+    "screen-title": "Home",
+    "memory-games": "Memory",
+    "focus-games": "Focus"
   },
   "settings": {
-    "settings-title": "settings",
+    "screen-title": "settings",
+    "more":"More",
     "voices": "voices",
     "language": "language"
   },

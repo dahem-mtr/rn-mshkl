@@ -6,22 +6,37 @@ import { theme } from "../utils/theme";
 import Header from "../components/Left";
 import { strings } from "../utils/i18n";
 import { games } from "../games-sources/games";
+import AppLoading from "./AppLoading";
 
 import GamesListHorizontal from "../components/GamesListHorizontal";
+import { useFocusEffect } from "@react-navigation/native";
+
 const HomeScreen = ({ navigation }) => {
   const app = useSelector((state) => state.app);
   const appState = useContext(AppContext);
+  const [appLoaded, setAppLoaded] = useState(false);
+  
+
+  // useEffect(() => {
+  //   if (appLoaded) 
+  //   SplashScreen.hide()
+    
+  // }, [appLoaded]);
+
   
   return (
-    <View style={[styles.container, app.isRTL ? { paddingRight: 4 } : { paddingLeft: 4 }]}>
+    <View style={styles.container}>
 
       <ScrollView>
-
+        
+        { appLoaded ?
         <GamesListHorizontal navigation={navigation} app={app} type={"save"} games={games} backgroundColor={"#29ABE2"} title={strings.t("home.memory-games")} />
-        <GamesListHorizontal navigation={navigation} app={app} type={"focus"} games={games} backgroundColor={"#73ce75"} title={strings.t("home.focus-games")} />
+      : null
+      }
         
         
       </ScrollView>
+      <AppLoading setAppLoaded={setAppLoaded}/>
     </View>
   );
 };
@@ -39,11 +54,12 @@ const styles = StyleSheet.create({
     width: 200,
   },
   screenTitle: {
+    marginVertical:10,
     alignSelf: "center",
     fontFamily: theme.fonts.main.ar,
-    color: theme.colors.text,
-    fontSize: 20,
-    marginRight: 10,
+    // color: theme.colors.text,
+    fontSize: 30,
+    marginHorizontal: 10,
     // marginBottom: 10,
   },
 });

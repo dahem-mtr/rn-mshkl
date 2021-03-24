@@ -1,5 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Switch, InteractionManager, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Switch,
+  InteractionManager,
+  ScrollView,
+} from "react-native";
 import { storeData } from "../storage";
 
 import { MaterialIcons } from "@expo/vector-icons";
@@ -8,6 +16,7 @@ import { useSelector, useDispatch } from "react-redux";
 import AppContext from "../utils/AppContext";
 import { setLang, setLoading } from "../actions/appActions";
 import i18n, { strings } from "../utils/i18n";
+import Item from "../components/Item";
 
 // import i18n1 from "../../i18n";
 import { theme } from "../utils/theme";
@@ -29,41 +38,30 @@ const settingsScreen = ({ navigation }) => {
     });
   });
 
-  const onPress = () => {
-    // sound1.replayAsync();
-
-    navigation.goBack();
-  };
-
-  const onPressL = () => {
+  const onPressLanguage = () => {
     dispatch(setLoading(true));
     // navigation.navigate("HomeTap")
 
     if (app.lang == "en") {
-      storeData("lang", "ar")
+      storeData("lang", "ar");
       dispatch(setLang("ar"));
       i18n.locale = "ar";
     } else {
-      storeData("lang", "en")
+      storeData("lang", "en");
       dispatch(setLang("en"));
       i18n.locale = "en";
     }
     setTimeout(() => {
-
       dispatch(setLoading(false));
-    }, 600);
-
-
-
+    }, 1000);
   };
   const props = [
     {
       title: strings.t("settings.voices"),
-      icon: <Octicons name="unmute" size={23} color="#29ABE2" />,
+      icon: <Octicons name="unmute" size={23} color="#7366ff" />,
       button: (
         <Switch
-          // style={{borderStartColor}}
-          trackColor={{ true: "#29ABE2" }}
+          trackColor={{ true: "#7366ff" }}
           thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
           // ios_backgroundColor="#3e3e3e"
           // ios_backgroundColor="#ddd"
@@ -74,164 +72,76 @@ const settingsScreen = ({ navigation }) => {
     },
     {
       title: strings.t("settings.language"),
-      icon: <MaterialIcons name="language" size={24} color="#29ABE2" />,
+      icon: <MaterialIcons name="language" size={24} color="#7366ff" />,
       button: (
         <TouchableOpacity
           activeOpacity={1}
           onPress={() =>
             // navigation.navigate('LanguagesScreen')
-            onPressL()
+            onPressLanguage()
           }
           title="Open modal"
         >
-          <Text style={styles.title}>
-            {app.isRTL ? "  العربية " : "  ENGLISH"}
+          <Text style={styles.lang}>
+            {app.isRTL ? "< ENGLISH " : "< العربية"}
           </Text>
         </TouchableOpacity>
       ),
     },
   ];
 
-  const renderData1 = () => {
+  const listItems = () => {
     return props.map(function (item, i) {
       return (
-        <View
-          key={i}
-          style={[
-            styles.box,
-            { flexDirection: app.isRTL ? "row-reverse" : "row" },
-          ]}
-        >
-          <View style={styles.elment}>
-            <View style={{ flexDirection: app.isRTL ? "row-reverse" : "row" }}>
-              <View style={styles.iconContent}>{item.icon}</View>
-              <Text style={styles.title}>{item.title}</Text>
-            </View>
-          </View>
-
-          <View style={styles.elment}>{item.button}</View>
+        <View key={i}>
+          <Item isRTL={app.isRTL} item={item} />
         </View>
       );
     });
   };
   if (interactionsComplete) {
     return (
-      <View
-        style={styles.container}
-      >
-        <ParallaxScrollView
-          backgroundColor="#fff"
-          fadeOutForeground={true}
-          contentContainerStyle={{
-            borderTopEndRadius: 20,
-            borderTopStartRadius: 20,
-          }}
-          renderStickyHeader={() =>
-            <Text
-              style={[styles.title4, { alignSelf: "center" }]}
-            >
-              المزيد
-            </Text>
-          }
-          stickyHeaderHeight={70}
-          parallaxHeaderHeight={160 }
-          showsVerticalScrollIndicator={false}
-          outputScaleValue={2}
-          renderBackground={() => (
-            <Text
-              style={[styles.title2, { alignSelf: app.isRTL ? "flex-end" : "flex-start" }]}
-            >
-              المزيد
-            </Text>
-          )}
+      <ScrollView style={styles.container}>
+        <Text
+          style={[
+            styles.ItemsTitle,
+            ,
+            { alignSelf: app.isRTL ? "flex-end" : "flex-start" },
+          ]}
         >
-          <View>
-            
+          {strings.t("settings.screen-title")}
+        </Text>
 
-
-            <Text
-              style={[styles.title3, , { alignSelf: app.isRTL ? "flex-end" : "flex-start", }]}
-            >
-              {strings.t("settings.settings-title")}
-            </Text>
-
-            {renderData1()}
-
-          </View>
-        </ParallaxScrollView>
-        
-
-      </View>
+        {listItems()}
+      </ScrollView>
     );
   }
-  return null
-
+  return null;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.backgroundColor,
-    paddingTop:20
+    paddingTop: 40,
   },
-  box: {
-    // marginTop: 5,
-    height: 60,
-    // width: '100%',
-    // borderWidth: 0.6,
-    // borderRadius: 60 / 6,
-    // borderColor: "#dcdcdc",
-    justifyContent: "space-between",
-    backgroundColor: "#fff"
-  },
-  elment: {
-    // backgroundColor: '#ddd',
-    marginHorizontal: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  iconContent: {
-    height: 40,
-    width: 40,
-    borderRadius: 40 / 3,
-    // backgroundColor: "#ddd",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
+  lang: {
     fontSize: 13,
     marginHorizontal: 6,
     alignSelf: "center",
     fontWeight: "bold",
     // color: "#545F62",
-    fontFamily: theme.fonts.main.ar
+    fontFamily: theme.fonts.main.ar,
   },
-  title2: {
-    fontSize: 24,
-    // color: "#29ABE2",
-
-    fontWeight: "bold",
-    marginTop: 120,
-    alignSelf: 'center',
-    marginHorizontal: 40,
-    fontFamily: theme.fonts.main.ar
-  },
-  title3: {
+  ItemsTitle: {
     fontSize: 20,
-    color: "#29ABE2",
+    // color: "#29ABE2",
+    // color: "silver",
     fontWeight: "bold",
     marginTop: 18,
     marginHorizontal: 10,
-    fontFamily: theme.fonts.main.ar
-  },title4: {
-    fontSize: 18,
-    // color: "#29ABE2",
-
-    fontWeight: "bold",
-    alignSelf: 'center',
-    marginHorizontal: 10,
-    fontFamily: theme.fonts.main.ar
-  }
+    fontFamily: theme.fonts.main.ar,
+  },
 });
 
 export default settingsScreen;

@@ -9,7 +9,7 @@ export class Game extends PureComponent {
                 <TouchableWithoutFeedback onPress={() => this.props.onPress(this.props.item)}>
                     <View key={this.props.index} style={styles.imageContent}>
                         <Image style={styles.image} source={this.props.item.image} />
-                        <View></View>
+                        <View style={{ alignSelf: this.props.app.isRTL ? "flex-end" : "flex-start" }}><Text style={styles.gameTitle}> {this.props.item.titles[this.props.app.lang]}</Text></View>
                     </View>
                 </TouchableWithoutFeedback>
             </View>
@@ -30,13 +30,14 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
-        borderRadius: 8,
+        borderRadius: 5,
         // resizeMode: 'stretch',
     },
     gameTitle: {
         marginHorizontal: 7,
         fontFamily: theme.fonts.main.ar,
-        fontSize: 13,
-        color: "#fff",
+        
+        fontSize: 12,
+        // color: "#fff",
     },
 })
